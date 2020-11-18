@@ -5,7 +5,6 @@ public class GamePlay {
 	public void gamePlay(SnakeAndLadder snakeLadderObj, Player p1) {
 		
         int WINNING_POSITION = snakeLadderObj.getWinningPosition();
-        
         int playerPosition = p1.getPlayerPosition();
         
         while( playerPosition < WINNING_POSITION ) {
@@ -16,7 +15,9 @@ public class GamePlay {
             if(nextStatus.equals("ladder")) {
             	
             	playerPosition = playerPosition + diceNumber;
-            	p1.setPlayerPosition(playerPosition);
+            	
+            	if(playerPosition<=100)
+            		p1.setPlayerPosition(playerPosition);
             }
             
             else if(nextStatus.equals("snake")) {
