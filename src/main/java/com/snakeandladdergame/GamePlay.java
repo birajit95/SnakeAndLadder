@@ -9,5 +9,8 @@ public class GamePlay {
         
         int diceNumber = p1.getDiceNumber();
         System.out.println(diceNumber);
+        
+        String nextStatus = p1.getNextPositionStatus();
+        System.out.print(nextStatus);
     }
 }
