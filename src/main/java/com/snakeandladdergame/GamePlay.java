@@ -6,11 +6,21 @@ public class GamePlay {
 		
         int WINNING_POSITION = snakeLadderObj.getWinningPosition();
         int playerPosition = p1.getPlayerPosition();
+        int NumberOfTimesDiceRolled=0;
+        
         
         while( playerPosition < WINNING_POSITION ) {
+        	try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				
+				e.printStackTrace();
+			}
         	
         	int diceNumber = p1.getDiceNumber();
             String nextStatus = p1.getNextPositionStatus();
+            
+            NumberOfTimesDiceRolled++;
             
             if(nextStatus.equals("ladder")) {
             	
@@ -38,8 +48,10 @@ public class GamePlay {
             
             playerPosition = p1.getPlayerPosition();
             
-            System.out.println(playerPosition);
+            System.out.println("Player current position : "+ playerPosition);
         }
+        
+        System.out.println("Number of time the dice is rolled to win the game is: " + NumberOfTimesDiceRolled);
 		
 	}
 	
