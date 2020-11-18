@@ -4,8 +4,10 @@ package com.snakeandladdergame;
 public class SnakeAndLadder 
 {   
 	
-    public static void main( String[] args )
-    {
-        
+	
+    public int getDiceNumber() {
+    	
+    	return (int)Math.round((Math.random()*5)+1);
+    	
     }
 }
