@@ -3,7 +3,7 @@ package com.snakeandladdergame;
 
 public class SnakeAndLadder 
 {   
-	
+	private static int WINNING_POSITION=100;
 	
     public int getDiceNumber() {
     	
@@ -13,13 +13,17 @@ public class SnakeAndLadder
     
     public String getNextPositionStatus(){
     	
-    	int nextStatus = (int)Math.round((Math.random()*2)+1);
+    	int nextStatus = (int)Math.round(Math.random()*10);
     	
-    	if (nextStatus==1)
+    	if (nextStatus >= 1 && nextStatus < 5)
     		return "ladder";
-    	else if(nextStatus==2)
+    	else if(nextStatus >= 5 && nextStatus < 8)
     		return "snake";
     	else
     		return "noPlay";
+    }
+    
+    public int getWinningPosition() {
+    	return WINNING_POSITION;
     }
 }

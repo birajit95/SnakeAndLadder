@@ -2,7 +2,7 @@ package com.snakeandladdergame;
 
 public class Player{
 		
-   private int playerPossition=0;
+   private int playerPosition=0;
    
    private SnakeAndLadder snakeAndLadder;
    
@@ -19,5 +19,14 @@ public class Player{
    public String getNextPositionStatus() {
 	   return this.snakeAndLadder.getNextPositionStatus();
    }
+   
+   public void setPlayerPosition(int newPosition) {
+	   this.playerPosition = newPosition;
+   }
+   
+   public int getPlayerPosition() {
+	   return this.playerPosition;
+   }
+   
    
 }
