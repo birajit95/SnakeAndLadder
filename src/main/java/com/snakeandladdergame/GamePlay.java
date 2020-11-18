@@ -2,56 +2,88 @@ package com.snakeandladdergame;
 
 public class GamePlay {
 	
-	public void gamePlay(SnakeAndLadder snakeLadderObj, Player p1) {
+	public int RepeatOnCondition(int playerNumber ,int playerPosition,  int[] NumberOfTimesDiceRolled, int WINNING_POSITION, Player... player) {
+		
+		int diceNumber = player[playerNumber].getDiceNumber(); 
+        String nextStatus = player[playerNumber].getNextPositionStatus();
+    	
+        NumberOfTimesDiceRolled[playerNumber]++;
+        
+        playerPosition = player[playerNumber].getPlayerPosition();
+        
+        if(playerPosition >= WINNING_POSITION)
+        	return playerPosition;
+        
+    	
+        if(nextStatus.equals("ladder")) {
+        	playerPosition = playerPosition + diceNumber;
+        	
+        	if(playerPosition <= 100)
+        		player[playerNumber].setPlayerPosition(playerPosition);
+        	
+        	playerPosition = player[playerNumber].getPlayerPosition();
+        	
+        	System.out.println("Current position of player " + playerNumber + " : " + playerPosition);
+        	
+            this.RepeatOnCondition(playerNumber, playerPosition, NumberOfTimesDiceRolled, WINNING_POSITION, player);
+        }
+        
+        
+        else if(nextStatus.equals("snake")) {
+        	
+        	playerPosition = playerPosition - diceNumber;
+        	
+        	if(playerPosition < 0)
+        		player[playerNumber].setPlayerPosition(0);
+        	else
+        		player[playerNumber].setPlayerPosition(playerPosition);
+        	playerPosition = player[playerNumber].getPlayerPosition();
+        	System.out.println("Current position of player " + playerNumber + " : " + playerPosition);
+        }
+        
+        else {
+        	player[playerNumber].setPlayerPosition(playerPosition);
+        	playerPosition = player[playerNumber].getPlayerPosition();
+        	System.out.println("Current position of player " + playerNumber + " : " + playerPosition);
+        }
+        
+        
+        playerPosition = player[playerNumber].getPlayerPosition();
+           
+        return playerPosition;
+        
+	}
+	
+	
+	public void gamePlay(SnakeAndLadder snakeLadderObj, Player... player) {
 		
         int WINNING_POSITION = snakeLadderObj.getWinningPosition();
-        int playerPosition = p1.getPlayerPosition();
-        int NumberOfTimesDiceRolled=0;
+        int playerPosition = 0;
+        int NumberOfTimesDiceRolled[] = new int[player.length] ;
+        int playerNumber=0;
+        int winnerPlayer=0;
         
         
-        while( playerPosition < WINNING_POSITION ) {
+        while( playerPosition < WINNING_POSITION && playerNumber <= player.length) {
         	try {
-				Thread.sleep(100);
+				Thread.sleep(1);
 			} catch (InterruptedException e) {
 				
 				e.printStackTrace();
-			}
+			}   	
         	
-        	int diceNumber = p1.getDiceNumber();
-            String nextStatus = p1.getNextPositionStatus();
+        	playerPosition = this.RepeatOnCondition(playerNumber, playerPosition,  NumberOfTimesDiceRolled, WINNING_POSITION,  player);
+        	
+            winnerPlayer=playerNumber;
             
-            NumberOfTimesDiceRolled++;
+            playerNumber++;
             
-            if(nextStatus.equals("ladder")) {
-            	
-            	playerPosition = playerPosition + diceNumber;
-            	
-            	if(playerPosition<=100)
-            		p1.setPlayerPosition(playerPosition);
-            }
-            
-            else if(nextStatus.equals("snake")) {
-            	
-            	playerPosition = playerPosition - diceNumber;
-            	
-            	if(playerPosition<0)
-                	p1.setPlayerPosition(0);
-            	else
-            	    p1.setPlayerPosition(playerPosition);
-            }
-            
-            
-            else {
-            	p1.setPlayerPosition(playerPosition);
-            }
-            
-            
-            playerPosition = p1.getPlayerPosition();
-            
-            System.out.println("Player current position : "+ playerPosition);
+            if(playerNumber>=player.length)
+            	playerNumber=0;
         }
+        System.out.println("Winner is player " + winnerPlayer);
+        System.out.println("Number of time the dice is rolled to win the game is: " + NumberOfTimesDiceRolled[winnerPlayer]);
         
-        System.out.println("Number of time the dice is rolled to win the game is: " + NumberOfTimesDiceRolled);
 		
 	}
 	
@@ -59,10 +91,12 @@ public class GamePlay {
     {
 		SnakeAndLadder snakeLadderObj = new SnakeAndLadder();
         Player p1 = new Player(snakeLadderObj);
+        Player p2 = new Player(snakeLadderObj);
+        
         
         GamePlay gamePlayObj = new GamePlay();
         
-        gamePlayObj.gamePlay(snakeLadderObj, p1);
+        gamePlayObj.gamePlay(snakeLadderObj, p1, p2);
         
         
         
